@@ -1,0 +1,54 @@
+
+
+
+<div class="container">
+<div class="row">
+    <button  type="button" class="btn btn-primary" ng-click="getnewform()">GET FORM</button>
+  </div>
+<div class="row" ng-hide="formInfo"> 
+  <div class="col-md-6" >
+      <form name="{{formData.form_name}}" id="{{formData.form_id}}" ng-submit="formSubmit(formData)">
+        <div ng-repeat="data in formData.form_fields track by $index">
+          <div class="form-group"  ng-if="data.component=='textarea' || data.component=='textinput'">
+            <label for="{{data.label}}">{{data.description}}</label>
+            <input type="{{data.component}}"  ng-disabled="{{data.editable}}"
+             ng-required="{{data.required}}" ng-model="data.autofill" class="form-control"
+              name="input1" ng-pattern="data.validation" >
+              
+          </div>
+
+          <div class="form-group"  ng-if="data.component=='checkbox'">
+            <div>{{data.description}}</div>
+           
+
+              <label ng-repeat="op in data.options track by $index">
+                <input type="{{data.component}}"  checklist-model="data.autoselect"
+               checklist-value="op">
+                {{op}}
+            </label>
+          </div>
+
+           <div class="form-group"  ng-if="data.component=='radio'">
+            <div>{{data.description}}</div>
+           <label ng-repeat="op in data.options track by $index">
+          <input type="{{data.component}}" name="group" ng-model="data.radio" 
+           ng-required="required" ng-disabled="{{data.editable}}" value="{{data.selected}}"> {{op}}
+          </label>
+          </div>
+
+           
+          <div class="form-group" ng-if="data.component=='select'">
+             <label for="{{data.label}}">{{data.description}}</label>
+               <select class="form-control"  ng-disabled="{{data.editable}}"
+             ng-required="{{data.required}}" ng-model="data.autoselect[0]">
+                <option ng-repeat="item in data.options track by $index">{{item}}</option>
+
+                </select>
+          </div>
+          
+        </div>
+          <button type="submit" class="btn btn-default" ng-if="formData" >Submit</button>
+  </form>
+</div>
+</div>
+</div> 
