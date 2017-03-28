@@ -1,45 +1,46 @@
-
-
-
 <div class="container">
 <div class="row">
-    <button  type="button" class="btn btn-primary" ng-click="getnewform()">GET FORM</button>
+    <button  type="button" class="btn btn-primary" ng-click="getnewform()">GET FORMS</button>
   </div>
 <div class="row" ng-hide="formInfo"> 
   <div class="col-md-6" >
       <form name="{{formData.form_name}}" id="{{formData.form_id}}" ng-submit="formSubmit(formData)">
         <div ng-repeat="data in formData.form_fields track by $index">
           <div class="form-group"  ng-if="data.component=='textarea' || data.component=='textinput'">
-            <label for="{{data.label}}">{{data.description}}</label>
-            <input type="{{data.component}}"  ng-disabled="{{data.editable}}"
+           <h4>{{data.description}}</h4>  
+            <label for="{{data.label}}" class = "col-sm-12 control-label">{{data.label}}</label>
+            <input type="{{data.component}}"  ng-disabled="!{{data.editable}}"
              ng-required="{{data.required}}" ng-model="data.autofill" class="form-control"
               name="input1" ng-pattern="data.validation" >
               
           </div>
 
-          <div class="form-group"  ng-if="data.component=='checkbox'">
-            <div>{{data.description}}</div>
-           
-
-              <label ng-repeat="op in data.options track by $index">
+          <div class="form-group"  ng-if="data.component=='checkbox'" >
+            <h4>{{data.description}}</h4>
+             <label class = "col-sm-12 control-label"> {{data.label}}</label>
+              <div ng-repeat="op in data.options track by $index">
                 <input type="{{data.component}}"  checklist-model="data.autoselect"
-               checklist-value="op">
+               checklist-value="op" ng-required="{{data.required}}"
+                ng-disabled="!{{data.editable}}" ng-checked="isChecked(op,data.autoselect)">
                 {{op}}
-            </label>
+            </div>
           </div>
 
            <div class="form-group"  ng-if="data.component=='radio'">
-            <div>{{data.description}}</div>
-           <label ng-repeat="op in data.options track by $index">
-          <input type="{{data.component}}" name="group" ng-model="data.radio" 
-           ng-required="required" ng-disabled="{{data.editable}}" value="{{data.selected}}"> {{op}}
-          </label>
+            <h4>{{data.description}}</h4>
+
+           <label  for="{{data.label}}{{$index}}" class = "col-sm-12 control-label"> {{data.label}}</label>
+           <div ng-repeat="op in data.options track by $index">
+          <input type="{{data.component}}" id="{{data.label}}{{$index}}" name="group{{data.label}}" ng-model="data.radio" 
+           ng-required="required" ng-checked="isChecked(op,data.autoselect)" ng-disabled="!{{data.editable}}" value="{{op}}"> {{op}}
+          </div>
           </div>
 
            
           <div class="form-group" ng-if="data.component=='select'">
-             <label for="{{data.label}}">{{data.description}}</label>
-               <select class="form-control"  ng-disabled="{{data.editable}}"
+            <h4>{{data.description}}</h4>
+             <label for="{{data.label}}" class = "col-sm-12 control-label">{{data.label}}</label>
+               <select class="form-control"  ng-disabled="!{{data.editable}}"
              ng-required="{{data.required}}" ng-model="data.autoselect[0]">
                 <option ng-repeat="item in data.options track by $index">{{item}}</option>
 
