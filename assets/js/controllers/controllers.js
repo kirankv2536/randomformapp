@@ -42,5 +42,16 @@ angular.module('formApp.controllers', ['formApp.services'])
             });
 
     }
+
+//Checked Status 
+    $scope.isChecked =function(item,array){
+         var existRes = $.inArray(item, array);
+
+        if (existRes != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
         
 })
